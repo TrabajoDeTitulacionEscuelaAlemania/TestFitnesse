@@ -30,7 +30,7 @@ public class HU01Test extends ColumnFixture{
     
     public InitialContext ctx() throws IOException, NamingException{
         Properties props = new Properties();
-        props.load(new FileInputStream("C:\\Users\\Desarrollo\\Documents\\NetBeansProjects\\TestFitnesse\\nbproject\\jndi.properties"));
+        props.load(new FileInputStream("C:\\Users\\Rodrigo Rivas\\Documents\\NetBeansProjects\\TestFitnesse\\nbproject\\jndi.properties"));
         InitialContext ctx = new InitialContext(props);
         return ctx;
     }
@@ -43,8 +43,7 @@ public class HU01Test extends ColumnFixture{
     
     public String modificarDocumento() throws IOException, NamingException {
         DocumentoFacadeLocal documentoFacade = (DocumentoFacadeLocal) ctx().lookup("cl.usach.escalemania.sessionbeans.DocumentoFacadeLocal");
-        List<Documento> documentos = documentoFacade.findAll();
-        Documento documento = documentoFacade.obtenerDocumentoPorId(documentos, "1");
+        Documento documento = documentoFacade.findAll().get(0);
         SeccionFacadeLocal seccionFacade = (SeccionFacadeLocal) ctx().lookup("cl.usach.escalemania.sessionbeans.SeccionFacadeLocal");
         List<Seccion> secciones = seccionFacade.findAll();
         EstadoDocumentoFacadeLocal estadoDocumentoFacade = (EstadoDocumentoFacadeLocal) ctx().
@@ -57,8 +56,7 @@ public class HU01Test extends ColumnFixture{
             seccion = documento.getSeccion().getSeccion();
             documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, estadoDocumento),
                     ubicacion, seccionFacade.obtenerPorNombre(seccion, secciones), observacion, documento);
-            documentos = documentoFacade.findAll();
-            documento = documentoFacade.obtenerDocumentoPorId(documentos, "1");
+            documento = documentoFacade.findAll().get(0);
             return documento.getEstadoDocumento().getEstado();
         } else {
             if (ubicacion.compareTo("vacio") == 0 && observacion.compareTo("-") == 0 && seccion.compareTo("-") == 0) {
@@ -69,8 +67,7 @@ public class HU01Test extends ColumnFixture{
                         ubicacion, seccionFacade.obtenerPorNombre(seccion, secciones), observacion, documento).compareTo("Campo vacio") == 0) {
                     return "Campo vacio";
                 }
-                documentos = documentoFacade.findAll();
-                documento = documentoFacade.obtenerDocumentoPorId(documentos, "1");
+                documento =documentoFacade.findAll().get(0);
                 return documento.getEstadoDocumento().getEstado();
             } else {
                 if (ubicacion.compareTo("Estante 5, archivador 8") == 0 && observacion.compareTo("-") == 0
@@ -80,8 +77,7 @@ public class HU01Test extends ColumnFixture{
                     estadoDocumento = documento.getEstadoDocumento().getEstado();
                     documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, estadoDocumento),
                             ubicacion, seccionFacade.obtenerPorNombre(seccion, secciones), observacion, documento);
-                    documentos = documentoFacade.findAll();
-                    documento = documentoFacade.obtenerDocumentoPorId(documentos, "1");
+                    documento = documentoFacade.findAll().get(0);
                     return documento.getUbicacion();
                 } else {
                     if (ubicacion.compareTo("-") == 0 && observacion.compareTo("Se realizo la solicitud") == 0
@@ -91,8 +87,7 @@ public class HU01Test extends ColumnFixture{
                         estadoDocumento = documento.getEstadoDocumento().getEstado();
                         documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, estadoDocumento),
                                 ubicacion, seccionFacade.obtenerPorNombre(seccion, secciones), observacion, documento);
-                        documentos = documentoFacade.findAll();
-                        documento = documentoFacade.obtenerDocumentoPorId(documentos, "1");
+                        documento = documentoFacade.findAll().get(0);
                         return documento.getObservacion();
                     } else {
                         if (ubicacion.compareTo("-") == 0 && observacion.compareTo("-") == 0
@@ -102,8 +97,7 @@ public class HU01Test extends ColumnFixture{
                             estadoDocumento = documento.getEstadoDocumento().getEstado();
                             documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, estadoDocumento),
                                     ubicacion, seccionFacade.obtenerPorNombre(seccion, secciones), observacion, documento);
-                            documentos = documentoFacade.findAll();
-                            documento = documentoFacade.obtenerDocumentoPorId(documentos, "1");
+                            documento = documentoFacade.findAll().get(0);
                             return documento.getSeccion().getSeccion();
                         } else {
                             if (ubicacion.compareTo("vacio") == 0 && observacion.compareTo("Parte del Sep") == 0 && seccion.compareTo("Vital") == 0
@@ -113,8 +107,7 @@ public class HU01Test extends ColumnFixture{
                                         ubicacion, seccionFacade.obtenerPorNombre(seccion, secciones), observacion, documento).compareTo("Campo vacio") == 0) {
                                     return "Campo vacio";
                                 }
-                                documentos = documentoFacade.findAll();
-                                documento = documentoFacade.obtenerDocumentoPorId(documentos, "1");
+                                documento = documentoFacade.findAll().get(0);
                                 return documento.getEstadoDocumento().getEstado();
                             }
                         }
@@ -124,8 +117,7 @@ public class HU01Test extends ColumnFixture{
         }
         documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, estadoDocumento),
                 ubicacion, seccionFacade.obtenerPorNombre(seccion, secciones), observacion, documento);
-        documentos = documentoFacade.findAll();
-        documento = documentoFacade.obtenerDocumentoPorId(documentos, "1");
+        documento = documentoFacade.findAll().get(0);
         return documento.getSeccion().getSeccion() + "-" + documento.getEstadoDocumento().getEstado()
                 + "-" + documento.getUbicacion() + "-" + documento.getObservacion();
     }

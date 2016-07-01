@@ -6,9 +6,7 @@
 package cl.usach.escalemania.fitnesse;
 
 import cl.usach.escalemania.entities.Documento;
-import cl.usach.escalemania.entities.EstadoDocumento;
 import cl.usach.escalemania.sessionbeans.DocumentoFacadeLocal;
-import cl.usach.escalemania.sessionbeans.EstadoDocumentoFacadeLocal;
 import fit.ColumnFixture;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -27,23 +25,20 @@ public class HU03Test extends ColumnFixture{
     
     public InitialContext ctx() throws IOException, NamingException{
         Properties props = new Properties();
-        props.load(new FileInputStream("C:\\Users\\Desarrollo\\Documents\\NetBeansProjects\\TestFitnesse\\nbproject\\jndi.properties"));
+        props.load(new FileInputStream("C:\\Users\\Rodrigo Rivas\\Documents\\NetBeansProjects\\TestFitnesse\\nbproject\\jndi.properties"));
         InitialContext ctx = new InitialContext(props);
         return ctx;
     }
     
-    public String filtrarDocumentoPorEstado() throws IOException, NamingException{
+    public int filtrarDocumentoPorEstado() throws IOException, NamingException{
         DocumentoFacadeLocal documentoFacade=(DocumentoFacadeLocal)ctx().lookup("cl.usach.escalemania.sessionbeans.DocumentoFacadeLocal");
-        EstadoDocumentoFacadeLocal estadoDocumentoFacade=(EstadoDocumentoFacadeLocal)ctx().
-                lookup("cl.usach.escalemania.sessionbeans.EstadoDocumentoFacadeLocal");
-        List<EstadoDocumento> estadoDocumentos=estadoDocumentoFacade.findAll();
-        List<Documento> documentos=documentoFacade.obtenerDocumentoPorEstado
-                (estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, estadoDocumento));
-        if(documentos==null)
-            return "No hay documentos";
-        for(Documento doc:documentos)
+        List<Documento> documentos=documentoFacade.findAll();
+        List<Documento> documentosFiltrados= documentoFacade.filtrarPorEstado(documentos, estadoDocumento);
+        if(documentosFiltrados==null)
+            return 0;
+        for(Documento doc:documentosFiltrados)
             if(doc.getEstadoDocumento().getEstado().compareTo(estadoDocumento)!=0)
-                return "Hay docuemntos con diferente estado";
-        return "OK";
+                return -1;
+        return documentosFiltrados.size();
     }
 }
