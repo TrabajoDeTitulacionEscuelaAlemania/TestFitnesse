@@ -25,7 +25,7 @@ import javax.naming.NamingException;
  */
 public class HU01Test extends ColumnFixture{
     
-    String ubicacion, observacion,estadoDocumento, seccion;
+    String ubicacion, observacion,estadoDocumento, seccion, nombre;
     
     
     public InitialContext ctx() throws IOException, NamingException{
@@ -49,76 +49,24 @@ public class HU01Test extends ColumnFixture{
         EstadoDocumentoFacadeLocal estadoDocumentoFacade = (EstadoDocumentoFacadeLocal) ctx().
                 lookup("cl.usach.escalemania.sessionbeans.EstadoDocumentoFacadeLocal");
         List<EstadoDocumento> estadoDocumentos = estadoDocumentoFacade.findAll();
-
-        if (ubicacion.compareTo("-") == 0 && observacion.compareTo("-") == 0 && seccion.compareTo("-") == 0) {
-            ubicacion = documento.getUbicacion();
-            observacion = documento.getObservacion();
-            seccion = documento.getSeccion().getSeccion();
-            documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, estadoDocumento),
-                    ubicacion, seccionFacade.obtenerPorNombre(seccion, secciones), observacion, documento);
-            documento = documentoFacade.findAll().get(0);
-            return documento.getEstadoDocumento().getEstado();
-        } else {
-            if (ubicacion.compareTo("vacio") == 0 && observacion.compareTo("-") == 0 && seccion.compareTo("-") == 0) {
-                ubicacion = "";
-                observacion = documento.getObservacion();
-                seccion = documento.getSeccion().getSeccion();
-                if (documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, estadoDocumento),
-                        ubicacion, seccionFacade.obtenerPorNombre(seccion, secciones), observacion, documento).compareTo("Campo vacio") == 0) {
-                    return "Campo vacio";
-                }
-                documento =documentoFacade.findAll().get(0);
-                return documento.getEstadoDocumento().getEstado();
-            } else {
-                if (ubicacion.compareTo("Estante 5, archivador 8") == 0 && observacion.compareTo("-") == 0
-                        && seccion.compareTo("-") == 0 && estadoDocumento.compareTo("-") == 0) {
-                    observacion = documento.getObservacion();
-                    seccion = documento.getSeccion().getSeccion();
-                    estadoDocumento = documento.getEstadoDocumento().getEstado();
-                    documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, estadoDocumento),
-                            ubicacion, seccionFacade.obtenerPorNombre(seccion, secciones), observacion, documento);
-                    documento = documentoFacade.findAll().get(0);
-                    return documento.getUbicacion();
-                } else {
-                    if (ubicacion.compareTo("-") == 0 && observacion.compareTo("Se realizo la solicitud") == 0
-                            && seccion.compareTo("-") == 0 && estadoDocumento.compareTo("-") == 0) {
-                        ubicacion = documento.getUbicacion();
-                        seccion = documento.getSeccion().getSeccion();
-                        estadoDocumento = documento.getEstadoDocumento().getEstado();
-                        documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, estadoDocumento),
-                                ubicacion, seccionFacade.obtenerPorNombre(seccion, secciones), observacion, documento);
-                        documento = documentoFacade.findAll().get(0);
-                        return documento.getObservacion();
-                    } else {
-                        if (ubicacion.compareTo("-") == 0 && observacion.compareTo("-") == 0
-                                && estadoDocumento.compareTo("-") == 0) {
-                            ubicacion = documento.getUbicacion();
-                            observacion = documento.getObservacion();
-                            estadoDocumento = documento.getEstadoDocumento().getEstado();
-                            documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, estadoDocumento),
-                                    ubicacion, seccionFacade.obtenerPorNombre(seccion, secciones), observacion, documento);
-                            documento = documentoFacade.findAll().get(0);
-                            return documento.getSeccion().getSeccion();
-                        } else {
-                            if (ubicacion.compareTo("vacio") == 0 && observacion.compareTo("Parte del Sep") == 0 && seccion.compareTo("Vital") == 0
-                                    && estadoDocumento.compareTo("Completo") == 0) {
-                                ubicacion = "";
-                                if (documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, estadoDocumento),
-                                        ubicacion, seccionFacade.obtenerPorNombre(seccion, secciones), observacion, documento).compareTo("Campo vacio") == 0) {
-                                    return "Campo vacio";
-                                }
-                                documento = documentoFacade.findAll().get(0);
-                                return documento.getEstadoDocumento().getEstado();
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, estadoDocumento),
-                ubicacion, seccionFacade.obtenerPorNombre(seccion, secciones), observacion, documento);
-        documento = documentoFacade.findAll().get(0);
-        return documento.getSeccion().getSeccion() + "-" + documento.getEstadoDocumento().getEstado()
-                + "-" + documento.getUbicacion() + "-" + documento.getObservacion();
+        if(nombre.compareTo("-")==0)
+            nombre=documento.getNombre();
+        if(nombre.compareTo("vacio")==0)
+            nombre="";
+        if(ubicacion.compareTo("-")==0)
+            ubicacion=documento.getUbicacion();
+        if(ubicacion.compareTo("vacio")==0)
+            ubicacion="";
+        if(observacion.compareTo("-")==0)
+            observacion=documento.getObservacion();
+        if(estadoDocumento.compareTo("-")==0)
+            estadoDocumento=documento.getEstadoDocumento().getEstado();
+        if(seccion.compareTo("-")==0)
+            seccion=documento.getSeccion().getSeccion();
+        String resultado=documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, estadoDocumento), ubicacion, seccionFacade.obtenerPorNombre(seccion, secciones), observacion, nombre, documento);
+                
+                documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, estadoDocumento),
+                ubicacion, seccionFacade.obtenerPorNombre(seccion, secciones), observacion, nombre, documento);
+        return resultado;
     }
 }
