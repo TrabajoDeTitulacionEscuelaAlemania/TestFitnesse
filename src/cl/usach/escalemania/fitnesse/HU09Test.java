@@ -5,6 +5,7 @@
  */
 package cl.usach.escalemania.fitnesse;
 
+import cl.usach.escalemania.entities.Documento;
 import cl.usach.escalemania.entities.EstadoDocumento;
 import cl.usach.escalemania.entities.Programa;
 import cl.usach.escalemania.entities.Seccion;
@@ -67,6 +68,12 @@ public class HU09Test extends ColumnFixture{
                 seccionFacade.obtenerPorNombre(seccion, secciones),
                 programaFacade.obtenerListaDeProgramas(programas, programasOriginal));
         return result;
-        
+    }
+    
+    public String eliminarDocumento() throws IOException, NamingException{
+        DocumentoFacadeLocal documentoFacade = (DocumentoFacadeLocal) ctx().lookup
+        ("cl.usach.escalemania.sessionbeans.DocumentoFacadeLocal");
+        List<Documento> documentos=documentoFacade.findAll();
+        return documentoFacade.eliminarDocumento(documentoFacade.buscarDocumento(nombre, documentos).get(0));
     }
 }
