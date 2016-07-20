@@ -17,11 +17,11 @@ import javax.naming.NamingException;
 
 /**
  *
- * @author Desarrollo
+ * @author Rodrigo Rivas
  */
-public class HU03Test extends ColumnFixture{
+public class HU13Test extends ColumnFixture{
     
-    String estadoDocumento;
+    String nombrePrograma;
     
     public InitialContext ctx() throws IOException, NamingException{
         Properties props = new Properties();
@@ -30,10 +30,10 @@ public class HU03Test extends ColumnFixture{
         return ctx;
     }
     
-    public int filtrarDocumentoPorEstado() throws IOException, NamingException{
+    public int filtrarDocumentoPorPrograma() throws IOException, NamingException{
         DocumentoFacadeLocal documentoFacade=(DocumentoFacadeLocal)ctx().lookup("cl.usach.escalemania.sessionbeans.DocumentoFacadeLocal");
         List<Documento> documentos=documentoFacade.findAll();
-        List<Documento> documentosFiltrados= documentoFacade.filtrarPorEstado(documentos, estadoDocumento);
+        List<Documento> documentosFiltrados=documentoFacade.filtrarPorPrograma(documentos, nombrePrograma);
         if(documentosFiltrados==null)
             return 0;
         return documentosFiltrados.size();
