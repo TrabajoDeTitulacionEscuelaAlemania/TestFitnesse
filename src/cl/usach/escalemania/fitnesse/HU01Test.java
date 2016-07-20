@@ -25,7 +25,7 @@ import javax.naming.NamingException;
  */
 public class HU01Test extends ColumnFixture{
     
-    String ubicacion, observacion,estadoDocumento, seccion, nombre;
+    String ubicacion, observacion,estadoDocumento, seccion, nombre, documentoSeleccionado;
     
     
     public InitialContext ctx() throws IOException, NamingException{
@@ -35,15 +35,9 @@ public class HU01Test extends ColumnFixture{
         return ctx;
     }
     
-    public int cantDocs() throws IOException, NamingException{
-        
-        DocumentoFacadeLocal documentoFacade=(DocumentoFacadeLocal)ctx().lookup("cl.usach.escalemania.sessionbeans.DocumentoFacadeLocal");
-        return documentoFacade.count();
-    }
-    
     public String modificarDocumento() throws IOException, NamingException {
         DocumentoFacadeLocal documentoFacade = (DocumentoFacadeLocal) ctx().lookup("cl.usach.escalemania.sessionbeans.DocumentoFacadeLocal");
-        Documento documento = documentoFacade.findAll().get(0);
+        Documento documento = documentoFacade.buscarDocumento(documentoSeleccionado, documentoFacade.findAll()).get(0);
         SeccionFacadeLocal seccionFacade = (SeccionFacadeLocal) ctx().lookup("cl.usach.escalemania.sessionbeans.SeccionFacadeLocal");
         List<Seccion> secciones = seccionFacade.findAll();
         EstadoDocumentoFacadeLocal estadoDocumentoFacade = (EstadoDocumentoFacadeLocal) ctx().
@@ -63,9 +57,7 @@ public class HU01Test extends ColumnFixture{
             estadoDocumento=documento.getEstadoDocumento().getEstado();
         if(seccion.compareTo("-")==0)
             seccion=documento.getSeccion().getSeccion();
-        String resultado=documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, estadoDocumento), ubicacion, seccionFacade.obtenerPorNombre(seccion, secciones), observacion, nombre, documento);
-                
-                documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, estadoDocumento),
+        String resultado=documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, estadoDocumento),
                 ubicacion, seccionFacade.obtenerPorNombre(seccion, secciones), observacion, nombre, documento);
         return resultado;
     }

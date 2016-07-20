@@ -42,11 +42,26 @@ public class HU07Test extends ColumnFixture{
         Simulacion simulacion=simulacionFacade.ultimaSimulacion(nombrePrograma, programas);
         if(simulacion==null)
             return "No existen simulaciones";
-        return simulacion.getDocCompletos()+" Completos-"+
-                simulacion.getDocIncompletos()+" Incompletos-"+
-                simulacion.getDocDesactualizados()+" Desactualizados-"+
-                simulacion.getDocSinInformacion()+" Sin informacion-"+
-                simulacion.getPorcentajeAprobacion()+"%-"+
-                simulacion.getNota();
+        int completoVital, completoImportante, completoNormal, 
+                incompletoVital, incompletoImportante, incompletoNormal, 
+                desactualizadoVital, desactualizadoImportante, desactualizadoNormal,
+                sinInformacionVital, sinInformacionImportante, sinInformacionNormal;
+        completoVital=simulacion.getDocCompletosVital();
+        completoImportante=simulacion.getDocCompletosImportante();
+        completoNormal=simulacion.getDocCompletosNormal();
+        incompletoVital=simulacion.getDocIncompletosVital();
+        incompletoImportante=simulacion.getDocIncompletosImportante();
+        incompletoNormal=simulacion.getDocIncompletosNormal();
+        desactualizadoVital=simulacion.getDocDesactualizadosVital();
+        desactualizadoImportante=simulacion.getDocDesactualizadosImportante();
+        desactualizadoNormal=simulacion.getDocDesactualizadosNormal();
+        sinInformacionVital=simulacion.getDocSinInformacionVital();
+        sinInformacionImportante=simulacion.getDocSinInformacionImportante();
+        sinInformacionNormal=simulacion.getDocSinInformacionNormal();
+        return completoVital+" Completos seccion vital-"+completoImportante+" Completos seccion importante-"+completoNormal+" Completos seccion normal-"
+                + incompletoVital+" Incompletos seccion vital-"+incompletoImportante+" Incompletos seccion importante-"+incompletoNormal+" Incompletos seccion normal-"
+                + desactualizadoVital+" Desactualizados seccion vital-"+desactualizadoImportante+" Desactualizados seccion importante-"+desactualizadoNormal+" Desactualizados seccion normal-"
+                + sinInformacionVital+" Sin informacion seccion vital-"+sinInformacionImportante+" Sin informacion seccion importante-"+sinInformacionNormal+" Sin informacion seccion normal-"
+                + simulacion.getPorcentajeAprobacion()+"%-"+simulacion.getNota();
     }
 }
