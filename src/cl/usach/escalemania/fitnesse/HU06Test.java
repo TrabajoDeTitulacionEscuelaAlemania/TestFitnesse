@@ -8,6 +8,7 @@ package cl.usach.escalemania.fitnesse;
 
 import cl.usach.escalemania.entities.Documento;
 import cl.usach.escalemania.sessionbeans.DocumentoFacadeLocal;
+import cl.usach.escalemania.sessionbeans.PlanificacionLocal;
 import fit.ColumnFixture;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -23,7 +24,7 @@ import javax.naming.NamingException;
  */
 public class HU06Test extends ColumnFixture{
     
-    String fecha;
+    int  realizarSeteo;
     
     public InitialContext ctx() throws IOException, NamingException{
         Properties props = new Properties();
@@ -45,7 +46,13 @@ public class HU06Test extends ColumnFixture{
         return documentosAlerta.size()+" documentos en alerta";
     }
     
-    public String setearEstado(){
-        return null;
+    public String setearEstado() throws IOException, NamingException{
+        if(realizarSeteo==1){
+            PlanificacionLocal planificacion = (PlanificacionLocal) ctx().lookup
+                    ("cl.usach.escalemania.sessionbeans.PlanificacionLocal");
+            planificacion.setearEstadoDOcumentos();
+            return "Se ejecutó el cambio de estados";
+        }
+        return "No se ejecutó el cambio de estados";
     }
 }

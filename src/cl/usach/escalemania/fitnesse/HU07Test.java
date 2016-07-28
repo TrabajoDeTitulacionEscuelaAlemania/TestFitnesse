@@ -8,6 +8,7 @@ package cl.usach.escalemania.fitnesse;
 
 import cl.usach.escalemania.entities.Programa;
 import cl.usach.escalemania.entities.Simulacion;
+import cl.usach.escalemania.sessionbeans.PlanificacionLocal;
 import cl.usach.escalemania.sessionbeans.ProgramaFacadeLocal;
 import cl.usach.escalemania.sessionbeans.SimulacionFacadeLocal;
 import fit.ColumnFixture;
@@ -25,6 +26,7 @@ import javax.naming.NamingException;
 public class HU07Test extends ColumnFixture{
     
     String nombrePrograma;
+    int realizarSimulacion;
     
     public InitialContext ctx() throws IOException, NamingException {
         Properties props = new Properties();
@@ -63,5 +65,14 @@ public class HU07Test extends ColumnFixture{
                 + desactualizadoVital+" Desactualizados seccion vital-"+desactualizadoImportante+" Desactualizados seccion importante-"+desactualizadoNormal+" Desactualizados seccion normal-"
                 + sinInformacionVital+" Sin informacion seccion vital-"+sinInformacionImportante+" Sin informacion seccion importante-"+sinInformacionNormal+" Sin informacion seccion normal-"
                 + simulacion.getPorcentajeAprobacion()+"%-"+simulacion.getNota();
+    }
+    public String simulacionMensual() throws IOException, NamingException{
+        if(realizarSimulacion==1){
+            PlanificacionLocal planificacion = (PlanificacionLocal) ctx().lookup
+                    ("cl.usach.escalemania.sessionbeans.PlanificacionLocal");
+            planificacion.realizarSimulacion();
+            return "Simulación realizada";
+        }
+        return "No se realizó la simulación";
     }
 }
