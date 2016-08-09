@@ -20,7 +20,7 @@ import javax.naming.NamingException;
 public class HU14Test extends ColumnFixture{
     
     String nuevoUsuario, contraseñaActual, nuevaContraseña1, nuevaContraseña2, usuarioReestablecerContraseña, 
-            usuarioEliminar, nuevaContraseñaVisitante1,nuevaContraseñaVisitante2, nombreUsuario;
+            usuarioEliminar, nuevaContraseñaVisitante1,nuevaContraseñaVisitante2, nombreUsuario,nombreUsuarioCorreo, correoUsuario;
     
     public InitialContext ctx() throws IOException, NamingException{
         Properties props = new Properties();
@@ -52,5 +52,10 @@ public class HU14Test extends ColumnFixture{
     public String cambiarContraseñaVisitante() throws IOException, NamingException{
         UsuarioFacadeLocal usuarioFacade=(UsuarioFacadeLocal)ctx().lookup("cl.usach.escalemania.sessionbeans.UsuarioFacadeLocal");
         return usuarioFacade.cambiarContraseñaVisitante(nuevaContraseñaVisitante1, nuevaContraseñaVisitante2);
+    }
+    
+    public String asociarCorreo()throws IOException, NamingException{
+        UsuarioFacadeLocal usuarioFacade=(UsuarioFacadeLocal)ctx().lookup("cl.usach.escalemania.sessionbeans.UsuarioFacadeLocal");
+        return usuarioFacade.asociarCorreo(nombreUsuarioCorreo, correoUsuario);
     }
 }
