@@ -5,10 +5,13 @@
  */
 package cl.usach.escalemania.fitnesse;
 
-import cl.usach.escalemania.sessionbeans.ParametroSistemaFacadeLocal;
+import cl.usach.escalemania.sessionbeans.AlertaFacadeLocal;
 import fit.ColumnFixture;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -17,9 +20,9 @@ import javax.naming.NamingException;
  *
  * @author Rodrigo Rivas
  */
-public class HU17Test extends ColumnFixture{
+public class HU15Test extends ColumnFixture{
     
-    String nombreParametro, valorParametro;
+    String mensajeAlerta, destinosAlerta;
     
     public InitialContext ctx() throws IOException, NamingException{
         Properties props = new Properties();
@@ -28,9 +31,11 @@ public class HU17Test extends ColumnFixture{
         return ctx;
     }
     
-    public String modificarParametro() throws IOException, NamingException{
-        ParametroSistemaFacadeLocal parametroSistemaFacade=(ParametroSistemaFacadeLocal)ctx().lookup("cl.usach.escalemania.sessionbeans.ParametroSistemaFacadeLocal");
-        return parametroSistemaFacade.modificarParametro(nombreParametro, valorParametro);
+    public String enviarAlerta()throws IOException, NamingException{
+        AlertaFacadeLocal alertaFacade=(AlertaFacadeLocal)ctx().lookup("cl.usach.escalemania.sessionbeans.AlertaFacadeLocal");
+        List<String> destinos=new ArrayList<>();
+        if(!destinosAlerta.isEmpty())
+            destinos=Arrays.asList(destinosAlerta.split(","));
+        return alertaFacade.enviarAlerta(mensajeAlerta, destinos);
     }
-    
 }
