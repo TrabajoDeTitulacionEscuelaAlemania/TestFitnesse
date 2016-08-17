@@ -25,7 +25,7 @@ import javax.naming.NamingException;
  */
 public class HU01Test extends ColumnFixture{
     
-    String ubicacion, observacion,estadoDocumento, seccion, nombre, documentoSeleccionado;
+    String ubicacion, observacion,estadoDocumento, seccion, nombre, documentoSeleccionado, nombreUsuario;
     
     
     public InitialContext ctx() throws IOException, NamingException{
@@ -45,12 +45,8 @@ public class HU01Test extends ColumnFixture{
         List<EstadoDocumento> estadoDocumentos = estadoDocumentoFacade.findAll();
         if(nombre.compareTo("-")==0)
             nombre=documento.getNombre();
-        if(nombre.compareTo("vacio")==0)
-            nombre="";
         if(ubicacion.compareTo("-")==0)
             ubicacion=documento.getUbicacion();
-        if(ubicacion.compareTo("vacio")==0)
-            ubicacion="";
         if(observacion.compareTo("-")==0)
             observacion=documento.getObservacion();
         if(estadoDocumento.compareTo("-")==0)
@@ -58,7 +54,7 @@ public class HU01Test extends ColumnFixture{
         if(seccion.compareTo("-")==0)
             seccion=documento.getSeccion().getSeccion();
         String resultado=documentoFacade.editarDocumento(estadoDocumentoFacade.obtenerEstadDocumentoPorNombre(estadoDocumentos, estadoDocumento),
-                ubicacion, seccionFacade.obtenerPorNombre(seccion, secciones), observacion, nombre, documento);
+                ubicacion, seccionFacade.obtenerPorNombre(seccion, secciones), observacion, nombre, documento, nombreUsuario);
         return resultado;
     }
 }
