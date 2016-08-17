@@ -19,7 +19,7 @@ import javax.naming.NamingException;
  */
 public class HU14Test extends ColumnFixture{
     
-    String nuevoUsuario, contraseñaActual, nuevaContraseña1, nuevaContraseña2, usuarioReestablecerContraseña, 
+    String nuevoUsuario, correoAsociado, contraseñaActual, nuevaContraseña1, nuevaContraseña2, usuarioReestablecerContraseña, 
             usuarioEliminar, nuevaContraseñaVisitante1,nuevaContraseñaVisitante2, nombreUsuario,nombreUsuarioCorreo, correoUsuario;
     
     public InitialContext ctx() throws IOException, NamingException{
@@ -31,7 +31,7 @@ public class HU14Test extends ColumnFixture{
     
     public String crearUsuario() throws IOException, NamingException{
         UsuarioFacadeLocal usuarioFacade=(UsuarioFacadeLocal)ctx().lookup("cl.usach.escalemania.sessionbeans.UsuarioFacadeLocal");
-        return usuarioFacade.crearUsuario(nuevoUsuario);
+        return usuarioFacade.crearUsuario(nuevoUsuario, correoAsociado);
     }
     
     public String cambiarContraseña() throws IOException, NamingException{
