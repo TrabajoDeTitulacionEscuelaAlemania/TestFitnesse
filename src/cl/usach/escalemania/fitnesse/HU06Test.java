@@ -28,7 +28,7 @@ public class HU06Test extends ColumnFixture{
     
     public InitialContext ctx() throws IOException, NamingException{
         Properties props = new Properties();
-        props.load(new FileInputStream("C:\\Users\\Rodrigo Rivas\\Documents\\NetBeansProjects\\TestFitnesse\\nbproject\\jndi.properties"));
+        props.load(new FileInputStream("C:\\Users\\Rodrigo.DESKTOP-8KS3UKH\\Documents\\NetBeansProjects\\TestFitnesse\\nbproject\\jndi.properties"));
         InitialContext ctx = new InitialContext(props);
         return ctx;
     }

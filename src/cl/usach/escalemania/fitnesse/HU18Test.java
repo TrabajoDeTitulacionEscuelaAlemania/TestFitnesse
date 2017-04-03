@@ -17,14 +17,14 @@ import javax.naming.NamingException;
  *
  * @author Rodrigo Rivas
  */
-public class HU19Test extends ColumnFixture{
+public class HU18Test extends ColumnFixture{
     
     String nombrePrograma, nuevoNombrePrograma;
     boolean moverDocumentos;
     
     public InitialContext ctx() throws IOException, NamingException{
         Properties props = new Properties();
-        props.load(new FileInputStream("C:\\Users\\Rodrigo Rivas\\Documents\\NetBeansProjects\\TestFitnesse\\nbproject\\jndi.properties"));
+        props.load(new FileInputStream("C:\\Users\\Rodrigo.DESKTOP-8KS3UKH\\Documents\\NetBeansProjects\\TestFitnesse\\nbproject\\jndi.properties"));
         InitialContext ctx = new InitialContext(props);
         return ctx;
     }
